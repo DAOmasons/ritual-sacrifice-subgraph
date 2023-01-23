@@ -2,7 +2,7 @@ specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
+  - kind: ethereum/contract
     name: CheckInSummonerV2
     network: gnosis
     source:
@@ -13,7 +13,7 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - CheckInSummonComplete
+        - CheckInShaman
       abis:
         - name: CheckInSummonerV2
           file: ./abis/CheckInSummonerV2.json
@@ -21,3 +21,24 @@ dataSources:
         - event: CheckInSummonComplete(indexed address,indexed address,indexed address,address,bool,uint256,uint256,uint32[5],bool,string)
           handler: handleCheckInSummonComplete
       file: ./src/check-in-summoner-v-2.ts
+templates:
+  - kind: ethereum/contract
+    name: CheckInTemplate
+    network: gnosis
+    source:
+      abi: CheckInShaman
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/check-in-summoner-v-2.ts
+      entities:
+        - Shaman
+        - Project
+      abis: 
+        - name: CheckInShaman
+          file: './abis/CheckInShaman.json'
+      # eventHandlers:
+      #   - event: 
+
+

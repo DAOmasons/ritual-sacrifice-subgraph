@@ -1,0 +1,147 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_template",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baal",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "summoner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "shamanAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "teamLead",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "sharesOrLoot",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenPerSecond",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "checkInInterval",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32[5]",
+        "name": "valueScalePercs",
+        "type": "uint32[5]"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isLocked",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "projectMetadata",
+        "type": "string"
+      }
+    ],
+    "name": "CheckInSummonComplete",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_baal",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_teamLead",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_sharesOrLoot",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenPerSecond",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_checkInInterval",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32[5]",
+        "name": "_valueScalePercs",
+        "type": "uint32[5]"
+      },
+      {
+        "internalType": "bool",
+        "name": "_shouldLock",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "_projectMetadata",
+        "type": "string"
+      }
+    ],
+    "name": "summon",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "template",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

@@ -1,35 +1,36 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt } from '@graphprotocol/graph-ts';
 import {
   CheckInSummonerV2,
-  CheckInSummonComplete
-} from "../generated/CheckInSummonerV2/CheckInSummonerV2"
-import { ExampleEntity } from "../generated/schema"
+  CheckInSummonComplete,
+} from '../generated/CheckInSummonerV2/CheckInSummonerV2';
+import { Shaman, Factory } from '../generated/schema';
 
 export function handleCheckInSummonComplete(
   event: CheckInSummonComplete
 ): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from)
-
+  let shaman = Shaman.load(event.transaction.from);
+  let factory = Factory.load(event.transaction.from);
   // Entities only exist after they have been saved to the store;
   // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from)
+  if (!factory) {
+    factory = new Factory(event.transaction.from);
 
     // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
+    factory.count = BigInt.fromI32(0);
   }
 
+  if (!shaman) {
+    shaman = new Shaman(event.transaction.from);
+  }
   // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
+  factory.count = factory.count.plus(BigInt.fromI32(1));
+  factory.shamans = factory.shamans.concat([shaman.id]);
   // Entity fields can be set based on event parameters
-  entity.baal = event.params.baal
-  entity.summoner = event.params.summoner
 
   // Entities can be written to the store with `.save()`
-  entity.save()
+  factory.save();
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with

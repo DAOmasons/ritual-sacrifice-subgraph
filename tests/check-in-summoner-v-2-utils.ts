@@ -1,6 +1,6 @@
-import { newMockEvent } from "matchstick-as"
-import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
-import { CheckInSummonComplete } from "../generated/CheckInSummonerV2/CheckInSummonerV2"
+import { newMockEvent } from 'matchstick-as';
+import { ethereum, Address, BigInt } from '@graphprotocol/graph-ts';
+import { CheckInSummonComplete } from '../generated/CheckInSummonerV2/CheckInSummonerV2';
 
 export function createCheckInSummonCompleteEvent(
   baal: Address,
@@ -16,58 +16,58 @@ export function createCheckInSummonCompleteEvent(
 ): CheckInSummonComplete {
   let checkInSummonCompleteEvent = changetype<CheckInSummonComplete>(
     newMockEvent()
-  )
+  );
 
-  checkInSummonCompleteEvent.parameters = new Array()
+  checkInSummonCompleteEvent.parameters = new Array();
 
   checkInSummonCompleteEvent.parameters.push(
-    new ethereum.EventParam("baal", ethereum.Value.fromAddress(baal))
-  )
+    new ethereum.EventParam('baal', ethereum.Value.fromAddress(baal))
+  );
   checkInSummonCompleteEvent.parameters.push(
-    new ethereum.EventParam("summoner", ethereum.Value.fromAddress(summoner))
-  )
+    new ethereum.EventParam('summoner', ethereum.Value.fromAddress(summoner))
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "shamanAddress",
+      'shamanAddress',
       ethereum.Value.fromAddress(shamanAddress)
     )
-  )
+  );
   checkInSummonCompleteEvent.parameters.push(
-    new ethereum.EventParam("teamLead", ethereum.Value.fromAddress(teamLead))
-  )
+    new ethereum.EventParam('teamLead', ethereum.Value.fromAddress(teamLead))
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "sharesOrLoot",
+      'sharesOrLoot',
       ethereum.Value.fromBoolean(sharesOrLoot)
     )
-  )
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "tokenPerSecond",
+      'tokenPerSecond',
       ethereum.Value.fromUnsignedBigInt(tokenPerSecond)
     )
-  )
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "checkInInterval",
+      'checkInInterval',
       ethereum.Value.fromUnsignedBigInt(checkInInterval)
     )
-  )
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "valueScalePercs",
+      'valueScalePercs',
       ethereum.Value.fromUnsignedBigIntArray(valueScalePercs)
     )
-  )
+  );
   checkInSummonCompleteEvent.parameters.push(
-    new ethereum.EventParam("isLocked", ethereum.Value.fromBoolean(isLocked))
-  )
+    new ethereum.EventParam('isLocked', ethereum.Value.fromBoolean(isLocked))
+  );
   checkInSummonCompleteEvent.parameters.push(
     new ethereum.EventParam(
-      "projectMetadata",
+      'projectMetadata',
       ethereum.Value.fromString(projectMetadata)
     )
-  )
+  );
 
-  return checkInSummonCompleteEvent
+  return checkInSummonCompleteEvent;
 }
