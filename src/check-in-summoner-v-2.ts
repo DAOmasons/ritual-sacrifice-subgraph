@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 import {
   CheckInSummonerV2,
   CheckInSummonComplete,
@@ -32,6 +32,7 @@ export function handleCheckInSummonComplete(
   summonEvent.type = "summon";
   summonEvent.createdAt = event.block.timestamp;
   summonEvent.shamanAddress = event.params.shamanAddress;
+  log.debug("Logging summoning event: {}", [summonEvent.type.toString()]);
 
   shaman.timeline.push(summonEvent.id);
   shaman.save();
