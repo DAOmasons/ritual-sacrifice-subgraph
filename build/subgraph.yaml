@@ -23,20 +23,3 @@ dataSources:
             address,address,bool,uint256,uint256,uint32[5],bool,string)
           handler: handleCheckInSummonComplete
       file: CheckInSummonerV2/CheckInSummonerV2.wasm
-templates:
-  - kind: ethereum/contract
-    name: CheckInTemplate
-    network: gnosis
-    source:
-      abi: CheckInShaman
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: CheckInSummonerV2/CheckInSummonerV2.wasm
-      entities:
-        - Shaman
-        - Project
-      abis:
-        - name: CheckInShaman
-          file: CheckInTemplate/abis/CheckInShaman.json

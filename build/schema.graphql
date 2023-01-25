@@ -19,6 +19,7 @@ type TimelineEvent @entity {
 
 type Shaman @entity {
   id: ID! # address
+  factory: Factory!
   createdAt: BigInt!
   baal: Bytes! # address
   address: Bytes! #address
@@ -33,7 +34,7 @@ type Shaman @entity {
 
 type Factory @entity {
   id: ID!
-  shamans: [Shaman!]!
+  shamans: [Shaman!]! @derivedFrom(field: "factory")
   count: BigInt!
 }
 

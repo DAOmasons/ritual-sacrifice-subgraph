@@ -22,24 +22,24 @@ dataSources:
         - event: CheckInSummonComplete(indexed address,indexed address,indexed address,address,bool,uint256,uint256,uint32[5],bool,string)
           handler: handleCheckInSummonComplete
       file: ./src/check-in-summoner-v-2.ts
-templates:
-  - kind: ethereum/contract
-    name: CheckInTemplate
-    network: gnosis
-    source:
-      abi: CheckInShaman
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/check-in-summoner-v-2.ts
-      entities:
-        - Shaman
-        - Project
-      abis: 
-        - name: CheckInShaman
-          file: './abis/CheckInShaman.json'
-      # eventHandlers:
-      #   - event: 
-
+# templates:
+#   - kind: ethereum/contract
+#     name: CheckInTemplate
+#     network: gnosis
+#     source:
+#       abi: CheckInShaman
+#     mapping:
+#       kind: ethereum/events
+#       apiVersion: 0.0.7
+#       language: wasm/assemblyscript
+#       file: ./src/check-in-summoner-v-2.ts
+#       entities:
+#         - Shaman
+#         - Project
+#       abis:
+#         - name: CheckInShaman
+#           file: './abis/CheckInShaman.json'
+#       eventHandlers:
+#         - event: CheckInSummonerV2(indexed address,indexed address,indexed address,address,bool)
+#       handler: handleCheckInSummonerV2
 

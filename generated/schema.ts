@@ -221,6 +221,15 @@ export class Shaman extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get factory(): string {
+    let value = this.get("factory");
+    return value!.toString();
+  }
+
+  set factory(value: string) {
+    this.set("factory", Value.fromString(value));
+  }
+
   get createdAt(): BigInt {
     let value = this.get("createdAt");
     return value!.toBigInt();

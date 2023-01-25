@@ -17,6 +17,12 @@ type TimelineEvent @entity {
   metadata: String
 }
 
+type Factory @entity {
+  id: ID!
+  shamans: [Shaman!]!
+  count: BigInt!
+}
+
 type Shaman @entity {
   id: ID! # address
   createdAt: BigInt!
@@ -29,12 +35,6 @@ type Shaman @entity {
   sharesOrLoot: Boolean!
   summoner: Bytes! # address
   timeline: [TimelineEvent!]!
-}
-
-type Factory @entity {
-  id: ID!
-  shamans: [Shaman!]!
-  count: BigInt!
 }
 
 type EventTransaction @entity {
