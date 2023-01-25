@@ -1,18 +1,38 @@
+type Claim @entity {
+  id: ID!
+  createdAt: Bytes!
+  shamanAddress: Bytes!
+  tokenAddress: Bytes!
+  amount: BigInt!
+  tx: EventTransaction!
+}
+
+type TimelineEvent @entity {
+  id: ID!
+  createdAt: BigInt!
+  createdBy: Bytes!
+  type: String!
+  shamanAddress: Bytes!
+  claim: Claim
+  metadata: String
+}
+
 type Shaman @entity {
-  id: Bytes! # address
+  id: ID! # address
   createdAt: BigInt!
   baal: Bytes! # address
   address: Bytes! #address
-  checkInInterval: BigInt!
+  interval: BigInt!
   tokenPerSecond: BigInt!
-  valueScalePercs: [Int!]
+  valueScalePercs: [BigInt!]!
   teamLead: Bytes! # address
   sharesOrLoot: Boolean!
   summoner: Bytes! # address
+  timeline: [TimelineEvent!]!
 }
 
 type Factory @entity {
-  id: Bytes!
+  id: ID!
   shamans: [Shaman!]!
   count: BigInt!
 }

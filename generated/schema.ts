@@ -11,10 +11,189 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Shaman extends Entity {
-  constructor(id: Bytes) {
+export class Claim extends Entity {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Claim entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Claim must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Claim", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Claim | null {
+    return changetype<Claim | null>(store.get("Claim", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get createdAt(): Bytes {
+    let value = this.get("createdAt");
+    return value!.toBytes();
+  }
+
+  set createdAt(value: Bytes) {
+    this.set("createdAt", Value.fromBytes(value));
+  }
+
+  get shamanAddress(): Bytes {
+    let value = this.get("shamanAddress");
+    return value!.toBytes();
+  }
+
+  set shamanAddress(value: Bytes) {
+    this.set("shamanAddress", Value.fromBytes(value));
+  }
+
+  get tokenAddress(): Bytes {
+    let value = this.get("tokenAddress");
+    return value!.toBytes();
+  }
+
+  set tokenAddress(value: Bytes) {
+    this.set("tokenAddress", Value.fromBytes(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
+
+  get tx(): string {
+    let value = this.get("tx");
+    return value!.toString();
+  }
+
+  set tx(value: string) {
+    this.set("tx", Value.fromString(value));
+  }
+}
+
+export class TimelineEvent extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TimelineEvent entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type TimelineEvent must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("TimelineEvent", id.toString(), this);
+    }
+  }
+
+  static load(id: string): TimelineEvent | null {
+    return changetype<TimelineEvent | null>(store.get("TimelineEvent", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get createdAt(): BigInt {
+    let value = this.get("createdAt");
+    return value!.toBigInt();
+  }
+
+  set createdAt(value: BigInt) {
+    this.set("createdAt", Value.fromBigInt(value));
+  }
+
+  get createdBy(): Bytes {
+    let value = this.get("createdBy");
+    return value!.toBytes();
+  }
+
+  set createdBy(value: Bytes) {
+    this.set("createdBy", Value.fromBytes(value));
+  }
+
+  get type(): string {
+    let value = this.get("type");
+    return value!.toString();
+  }
+
+  set type(value: string) {
+    this.set("type", Value.fromString(value));
+  }
+
+  get shamanAddress(): Bytes {
+    let value = this.get("shamanAddress");
+    return value!.toBytes();
+  }
+
+  set shamanAddress(value: Bytes) {
+    this.set("shamanAddress", Value.fromBytes(value));
+  }
+
+  get claim(): string | null {
+    let value = this.get("claim");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set claim(value: string | null) {
+    if (!value) {
+      this.unset("claim");
+    } else {
+      this.set("claim", Value.fromString(<string>value));
+    }
+  }
+
+  get metadata(): string | null {
+    let value = this.get("metadata");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set metadata(value: string | null) {
+    if (!value) {
+      this.unset("metadata");
+    } else {
+      this.set("metadata", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Shaman extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -22,24 +201,24 @@ export class Shaman extends Entity {
     assert(id != null, "Cannot save Shaman entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type Shaman must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type Shaman must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Shaman", id.toBytes().toHexString(), this);
+      store.set("Shaman", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): Shaman | null {
-    return changetype<Shaman | null>(store.get("Shaman", id.toHexString()));
+  static load(id: string): Shaman | null {
+    return changetype<Shaman | null>(store.get("Shaman", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get createdAt(): BigInt {
@@ -69,13 +248,13 @@ export class Shaman extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get checkInInterval(): BigInt {
-    let value = this.get("checkInInterval");
+  get interval(): BigInt {
+    let value = this.get("interval");
     return value!.toBigInt();
   }
 
-  set checkInInterval(value: BigInt) {
-    this.set("checkInInterval", Value.fromBigInt(value));
+  set interval(value: BigInt) {
+    this.set("interval", Value.fromBigInt(value));
   }
 
   get tokenPerSecond(): BigInt {
@@ -87,21 +266,13 @@ export class Shaman extends Entity {
     this.set("tokenPerSecond", Value.fromBigInt(value));
   }
 
-  get valueScalePercs(): Array<i32> | null {
+  get valueScalePercs(): Array<BigInt> {
     let value = this.get("valueScalePercs");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toI32Array();
-    }
+    return value!.toBigIntArray();
   }
 
-  set valueScalePercs(value: Array<i32> | null) {
-    if (!value) {
-      this.unset("valueScalePercs");
-    } else {
-      this.set("valueScalePercs", Value.fromI32Array(<Array<i32>>value));
-    }
+  set valueScalePercs(value: Array<BigInt>) {
+    this.set("valueScalePercs", Value.fromBigIntArray(value));
   }
 
   get teamLead(): Bytes {
@@ -130,12 +301,21 @@ export class Shaman extends Entity {
   set summoner(value: Bytes) {
     this.set("summoner", Value.fromBytes(value));
   }
+
+  get timeline(): Array<string> {
+    let value = this.get("timeline");
+    return value!.toStringArray();
+  }
+
+  set timeline(value: Array<string>) {
+    this.set("timeline", Value.fromStringArray(value));
+  }
 }
 
 export class Factory extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -143,33 +323,33 @@ export class Factory extends Entity {
     assert(id != null, "Cannot save Factory entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type Factory must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type Factory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Factory", id.toBytes().toHexString(), this);
+      store.set("Factory", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): Factory | null {
-    return changetype<Factory | null>(store.get("Factory", id.toHexString()));
+  static load(id: string): Factory | null {
+    return changetype<Factory | null>(store.get("Factory", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
-  get shamans(): Array<Bytes> {
+  get shamans(): Array<string> {
     let value = this.get("shamans");
-    return value!.toBytesArray();
+    return value!.toStringArray();
   }
 
-  set shamans(value: Array<Bytes>) {
-    this.set("shamans", Value.fromBytesArray(value));
+  set shamans(value: Array<string>) {
+    this.set("shamans", Value.fromStringArray(value));
   }
 
   get count(): BigInt {

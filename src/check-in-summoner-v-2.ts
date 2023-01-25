@@ -3,34 +3,53 @@ import {
   CheckInSummonerV2,
   CheckInSummonComplete,
 } from '../generated/CheckInSummonerV2/CheckInSummonerV2';
-import { Shaman, Factory } from '../generated/schema';
+import { Shaman, Factory, TimelineEvent } from '../generated/schema';
 
 export function handleCheckInSummonComplete(
   event: CheckInSummonComplete
 ): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let shaman = Shaman.load(event.transaction.from);
-  let factory = Factory.load(event.transaction.from);
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!factory) {
-    factory = new Factory(event.transaction.from);
-
-    // Entity fields can be set using simple assignments
-    factory.count = BigInt.fromI32(0);
-  }
+  let shaman = Shaman.load(event.params.shamanAddress.toHexString());
+  let factory = Factory.load(event.transaction.from.toHexString());
 
   if (!shaman) {
-    shaman = new Shaman(event.transaction.from);
+    shaman = new Shaman(event.params.shamanAddress.toHexString());
+    shaman.createdAt = event.block.timestamp;
+    shaman.baal = event.params.baal;
+    shaman.address = event.params.shamanAddress;
+    shaman.interval = event.params.checkInInterval;
+    shaman.tokenPerSecond = event.params.tokenPerSecond;
+    shaman.valueScalePercs = event.params.valueScalePercs;
+    shaman.teamLead = event.params.teamLead;
+    shaman.sharesOrLoot = event.params.sharesOrLoot;
+    shaman.summoner = event.params.summoner;
+    shaman.timeline = [];
   }
-  // BigInt and BigDecimal math are supported
+
+  let summonEvent = new TimelineEvent(event.transaction.hash.toHexString());
+  summonEvent.type = 'summon';
+  summonEvent.createdAt = event.block.timestamp;
+  summonEvent.shamanAddress = event.params.shamanAddress;
+
+  shaman.timeline.push(summonEvent.id);
+  shaman.save();
+
+  if (!factory) {
+    factory = new Factory(event.transaction.from.toHexString());
+    factory.count = BigInt.fromI32(0);
+    factory.shamans;
+  }
+
   factory.count = factory.count.plus(BigInt.fromI32(1));
-  factory.shamans = factory.shamans.concat([shaman.id]);
+  factory.shamans.push(shaman.id);
+  // BigInt and BigDecimal math are supported
+  // factory.count = factory.count.plus(BigInt.fromI32(1));
+  // factory.shamans = factory.shamans.concat([shaman.id]);
   // Entity fields can be set based on event parameters
 
   // Entities can be written to the store with `.save()`
-  factory.save();
+  // factory.save();
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
