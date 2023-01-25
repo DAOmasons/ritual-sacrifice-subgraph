@@ -29,12 +29,7 @@ type Shaman @entity {
   sharesOrLoot: Boolean!
   summoner: Bytes! # address
   timeline: [TimelineEvent!]!
-}
-
-type Factory @entity {
-  id: ID!
-  shamans: [Shaman!]!
-  count: BigInt!
+  projectMetadata: String!
 }
 
 type EventTransaction @entity {

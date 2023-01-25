@@ -1,9 +1,9 @@
-import { BigInt } from '@graphprotocol/graph-ts';
+import { BigInt, log } from "@graphprotocol/graph-ts";
 import {
   CheckInSummonerV2,
   CheckInSummonComplete,
-} from '../generated/CheckInSummonerV2/CheckInSummonerV2';
-import { Shaman, Factory, TimelineEvent } from '../generated/schema';
+} from "../generated/CheckInSummonerV2/CheckInSummonerV2";
+import { Shaman, TimelineEvent } from "../generated/schema";
 
 export function handleCheckInSummonComplete(
   event: CheckInSummonComplete
@@ -11,7 +11,7 @@ export function handleCheckInSummonComplete(
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   let shaman = Shaman.load(event.params.shamanAddress.toHexString());
-  let factory = Factory.load(event.transaction.from.toHexString());
+  // let factory = Factory.load(event.transaction.from.toHexString());
 
   if (!shaman) {
     shaman = new Shaman(event.params.shamanAddress.toHexString());
@@ -25,24 +25,26 @@ export function handleCheckInSummonComplete(
     shaman.sharesOrLoot = event.params.sharesOrLoot;
     shaman.summoner = event.params.summoner;
     shaman.timeline = [];
+    shaman.projectMetadata = event.params.projectMetadata;
   }
 
   let summonEvent = new TimelineEvent(event.transaction.hash.toHexString());
-  summonEvent.type = 'summon';
+  summonEvent.type = "summon";
   summonEvent.createdAt = event.block.timestamp;
   summonEvent.shamanAddress = event.params.shamanAddress;
+  log.debug("Logging summoning event: {}", [summonEvent.type.toString()]);
 
   shaman.timeline.push(summonEvent.id);
   shaman.save();
 
-  if (!factory) {
-    factory = new Factory(event.transaction.from.toHexString());
-    factory.count = BigInt.fromI32(0);
-    factory.shamans;
-  }
+  // if (!factory) {
+  //   factory = new Factory(event.transaction.from.toHexString());
+  //   factory.count = BigInt.fromI32(0);
+  //   factory.shamans;
+  // }
 
-  factory.count = factory.count.plus(BigInt.fromI32(1));
-  factory.shamans.push(shaman.id);
+  // factory.count = factory.count.plus(BigInt.fromI32(1));
+  // factory.shamans.push(shaman.id);
   // BigInt and BigDecimal math are supported
   // factory.count = factory.count.plus(BigInt.fromI32(1));
   // factory.shamans = factory.shamans.concat([shaman.id]);

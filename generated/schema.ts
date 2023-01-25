@@ -310,55 +310,14 @@ export class Shaman extends Entity {
   set timeline(value: Array<string>) {
     this.set("timeline", Value.fromStringArray(value));
   }
-}
 
-export class Factory extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Factory entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Factory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("Factory", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Factory | null {
-    return changetype<Factory | null>(store.get("Factory", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
+  get projectMetadata(): string {
+    let value = this.get("projectMetadata");
     return value!.toString();
   }
 
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get shamans(): Array<string> {
-    let value = this.get("shamans");
-    return value!.toStringArray();
-  }
-
-  set shamans(value: Array<string>) {
-    this.set("shamans", Value.fromStringArray(value));
-  }
-
-  get count(): BigInt {
-    let value = this.get("count");
-    return value!.toBigInt();
-  }
-
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set projectMetadata(value: string) {
+    this.set("projectMetadata", Value.fromString(value));
   }
 }
 
