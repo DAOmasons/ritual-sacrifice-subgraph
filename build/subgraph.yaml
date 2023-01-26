@@ -23,3 +23,22 @@ dataSources:
             address,address,bool,uint256,uint256,uint32[5],bool,string)
           handler: handleCheckInSummonComplete
       file: CheckInSummonerV2/CheckInSummonerV2.wasm
+templates:
+  - kind: ethereum/contract
+    name: CheckInTemplate
+    network: gnosis
+    source:
+      abi: CheckInShaman
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: templates/CheckInTemplate/CheckInTemplate.wasm
+      entities:
+        - TimelineEvent
+      abis:
+        - name: CheckInShaman
+          file: CheckInTemplate/abis/CheckInShaman.json
+      eventHandlers:
+        - event: Claim(indexed address,uint256,uint256,uint64,uint64[],uint8[],string)
+          handler: claim
