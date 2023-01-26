@@ -11,83 +11,6 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Claim extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Claim entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Claim must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("Claim", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Claim | null {
-    return changetype<Claim | null>(store.get("Claim", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get createdAt(): Bytes {
-    let value = this.get("createdAt");
-    return value!.toBytes();
-  }
-
-  set createdAt(value: Bytes) {
-    this.set("createdAt", Value.fromBytes(value));
-  }
-
-  get shamanAddress(): Bytes {
-    let value = this.get("shamanAddress");
-    return value!.toBytes();
-  }
-
-  set shamanAddress(value: Bytes) {
-    this.set("shamanAddress", Value.fromBytes(value));
-  }
-
-  get tokenAddress(): Bytes {
-    let value = this.get("tokenAddress");
-    return value!.toBytes();
-  }
-
-  set tokenAddress(value: Bytes) {
-    this.set("tokenAddress", Value.fromBytes(value));
-  }
-
-  get amount(): BigInt {
-    let value = this.get("amount");
-    return value!.toBigInt();
-  }
-
-  set amount(value: BigInt) {
-    this.set("amount", Value.fromBigInt(value));
-  }
-
-  get tx(): string {
-    let value = this.get("tx");
-    return value!.toString();
-  }
-
-  set tx(value: string) {
-    this.set("tx", Value.fromString(value));
-  }
-}
-
 export class TimelineEvent extends Entity {
   constructor(id: string) {
     super();
@@ -155,23 +78,6 @@ export class TimelineEvent extends Entity {
     this.set("shamanAddress", Value.fromBytes(value));
   }
 
-  get claim(): string | null {
-    let value = this.get("claim");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set claim(value: string | null) {
-    if (!value) {
-      this.unset("claim");
-    } else {
-      this.set("claim", Value.fromString(<string>value));
-    }
-  }
-
   get metadata(): string | null {
     let value = this.get("metadata");
     if (!value || value.kind == ValueKind.NULL) {
@@ -186,6 +92,100 @@ export class TimelineEvent extends Entity {
       this.unset("metadata");
     } else {
       this.set("metadata", Value.fromString(<string>value));
+    }
+  }
+
+  get shaman(): string {
+    let value = this.get("shaman");
+    return value!.toString();
+  }
+
+  set shaman(value: string) {
+    this.set("shaman", Value.fromString(value));
+  }
+
+  get projectMetadata(): string | null {
+    let value = this.get("projectMetadata");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set projectMetadata(value: string | null) {
+    if (!value) {
+      this.unset("projectMetadata");
+    } else {
+      this.set("projectMetadata", Value.fromString(<string>value));
+    }
+  }
+
+  get totalSecondsWorked(): BigInt | null {
+    let value = this.get("totalSecondsWorked");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalSecondsWorked(value: BigInt | null) {
+    if (!value) {
+      this.unset("totalSecondsWorked");
+    } else {
+      this.set("totalSecondsWorked", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get sessionsTime(): Array<BigInt> | null {
+    let value = this.get("sessionsTime");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigIntArray();
+    }
+  }
+
+  set sessionsTime(value: Array<BigInt> | null) {
+    if (!value) {
+      this.unset("sessionsTime");
+    } else {
+      this.set("sessionsTime", Value.fromBigIntArray(<Array<BigInt>>value));
+    }
+  }
+
+  get sessionsValue(): Array<i32> | null {
+    let value = this.get("sessionsValue");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toI32Array();
+    }
+  }
+
+  set sessionsValue(value: Array<i32> | null) {
+    if (!value) {
+      this.unset("sessionsValue");
+    } else {
+      this.set("sessionsValue", Value.fromI32Array(<Array<i32>>value));
+    }
+  }
+
+  get totalAmountClaimed(): BigInt | null {
+    let value = this.get("totalAmountClaimed");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalAmountClaimed(value: BigInt | null) {
+    if (!value) {
+      this.unset("totalAmountClaimed");
+    } else {
+      this.set("totalAmountClaimed", Value.fromBigInt(<BigInt>value));
     }
   }
 }

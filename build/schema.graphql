@@ -1,20 +1,16 @@
-type Claim @entity {
-  id: ID!
-  createdAt: Bytes!
-  shamanAddress: Bytes!
-  tokenAddress: Bytes!
-  amount: BigInt!
-  tx: EventTransaction!
-}
-
 type TimelineEvent @entity {
   id: ID!
   createdAt: BigInt!
   createdBy: Bytes!
   type: String!
   shamanAddress: Bytes!
-  claim: Claim
   metadata: String
+  shaman: Shaman!
+  projectMetadata: String
+  totalSecondsWorked: BigInt
+  sessionsTime: [BigInt!]
+  sessionsValue: [Int!]
+  totalAmountClaimed: BigInt
 }
 
 type Shaman @entity {
@@ -28,7 +24,7 @@ type Shaman @entity {
   teamLead: Bytes! # address
   sharesOrLoot: Boolean!
   summoner: Bytes! # address
-  timeline: [TimelineEvent!]!
+  timeline: [TimelineEvent!]! @derivedFrom(field: "shaman")
   projectMetadata: String!
 }
 

@@ -3,6 +3,7 @@ import {
   CheckInSummonerV2,
   CheckInSummonComplete,
 } from "../generated/CheckInSummonerV2/CheckInSummonerV2";
+import { CheckInTemplate } from "../generated/templates";
 import { Shaman, TimelineEvent } from "../generated/schema";
 
 export function handleCheckInSummonComplete(
@@ -10,31 +11,35 @@ export function handleCheckInSummonComplete(
 ): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let shaman = Shaman.load(event.params.shamanAddress.toHexString());
+  // let shaman = Shaman.load(event.params.shamanAddress.toHexString());
   // let factory = Factory.load(event.transaction.from.toHexString());
-
+  CheckInTemplate.create(event.params.shamanAddress);
+  let shaman = new Shaman(event.params.shamanAddress.toHexString());
   if (!shaman) {
-    shaman = new Shaman(event.params.shamanAddress.toHexString());
-    shaman.createdAt = event.block.timestamp;
-    shaman.baal = event.params.baal;
-    shaman.address = event.params.shamanAddress;
-    shaman.interval = event.params.checkInInterval;
-    shaman.tokenPerSecond = event.params.tokenPerSecond;
-    shaman.valueScalePercs = event.params.valueScalePercs;
-    shaman.teamLead = event.params.teamLead;
-    shaman.sharesOrLoot = event.params.sharesOrLoot;
-    shaman.summoner = event.params.summoner;
-    shaman.timeline = [];
-    shaman.projectMetadata = event.params.projectMetadata;
+    return;
   }
+
+  shaman = new Shaman(event.params.shamanAddress.toHexString());
+  shaman.createdAt = event.block.timestamp;
+  shaman.baal = event.params.baal;
+  shaman.address = event.params.shamanAddress;
+  shaman.interval = event.params.checkInInterval;
+  shaman.tokenPerSecond = event.params.tokenPerSecond;
+  shaman.valueScalePercs = event.params.valueScalePercs;
+  shaman.teamLead = event.params.teamLead;
+  shaman.sharesOrLoot = event.params.sharesOrLoot;
+  shaman.summoner = event.params.summoner;
+  shaman.projectMetadata = event.params.projectMetadata;
 
   let summonEvent = new TimelineEvent(event.transaction.hash.toHexString());
   summonEvent.type = "summon";
+  summonEvent.shaman = shaman.id;
   summonEvent.createdAt = event.block.timestamp;
   summonEvent.shamanAddress = event.params.shamanAddress;
+  summonEvent.createdBy = event.transaction.from;
+  summonEvent.projectMetadata = event.params.projectMetadata;
   log.debug("Logging summoning event: {}", [summonEvent.type.toString()]);
-
-  shaman.timeline.push(summonEvent.id);
+  summonEvent.save();
   shaman.save();
 
   // if (!factory) {
