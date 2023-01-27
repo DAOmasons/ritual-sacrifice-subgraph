@@ -11,6 +11,15 @@ type TimelineEvent @entity {
   sessionsTime: [BigInt!]
   sessionsValue: [Int!]
   totalAmountClaimed: BigInt
+  isLocked: Boolean
+  mutinyFrom: Bytes
+  mutinyTo: Bytes
+  updateIntervalFrom: BigInt
+  updateIntervalTo: BigInt
+  updateTokenPerSecondFrom: BigInt
+  updateTokenPerSecondTo: BigInt
+  updatePercsFrom: [BigInt!]
+  updatePercsTo: [BigInt!]
 }
 
 type Shaman @entity {
@@ -21,6 +30,7 @@ type Shaman @entity {
   interval: BigInt!
   tokenPerSecond: BigInt!
   valueScalePercs: [BigInt!]!
+  isLocked: Boolean!
   teamLead: Bytes! # address
   sharesOrLoot: Boolean!
   summoner: Bytes! # address
