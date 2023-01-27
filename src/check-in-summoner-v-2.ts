@@ -1,10 +1,10 @@
-import { BigInt, log } from "@graphprotocol/graph-ts";
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
   CheckInSummonerV2,
   CheckInSummonComplete,
-} from "../generated/CheckInSummonerV2/CheckInSummonerV2";
-import { CheckInTemplate } from "../generated/templates";
-import { Shaman, TimelineEvent } from "../generated/schema";
+} from '../generated/CheckInSummonerV2/CheckInSummonerV2';
+import { CheckInTemplate } from '../generated/templates';
+import { Shaman, TimelineEvent } from '../generated/schema';
 
 export function handleCheckInSummonComplete(
   event: CheckInSummonComplete
@@ -30,15 +30,16 @@ export function handleCheckInSummonComplete(
   shaman.sharesOrLoot = event.params.sharesOrLoot;
   shaman.summoner = event.params.summoner;
   shaman.projectMetadata = event.params.projectMetadata;
+  shaman.isLocked = event.params.isLocked;
 
   let summonEvent = new TimelineEvent(event.transaction.hash.toHexString());
-  summonEvent.type = "summon";
+  summonEvent.type = 'summon';
   summonEvent.shaman = shaman.id;
   summonEvent.createdAt = event.block.timestamp;
   summonEvent.shamanAddress = event.params.shamanAddress;
   summonEvent.createdBy = event.transaction.from;
   summonEvent.projectMetadata = event.params.projectMetadata;
-  log.debug("Logging summoning event: {}", [summonEvent.type.toString()]);
+  log.debug('Logging summoning event: {}', [summonEvent.type.toString()]);
   summonEvent.save();
   shaman.save();
 

@@ -41,13 +41,15 @@ templates:
       eventHandlers:
         - event: Claim(indexed address,uint256,uint256,uint64,uint64[],uint8[],string)
           handler: claim
-        # - event: Lock(bool)
-        #   handler: lock
-        # - event: Mutiny(address,address)
-        #   handler: mutiny
+        - event: Lock(bool)
+          handler: lock
+        - event: Mutiny(address,address)
+          handler: mutiny
+        - event: UpdatePercs(uint32[5],uint32[5])
+          handler: updatePercs
+        - event: UpdateTokenPerSecond(uint256,uint256)
+          handler: updateTokenPerSecond
+        - event: UpdateInterval(uint256,uint256)
+          handler: updateInterval
         # - event: Post(address,string,string)
         #   handler: post
-        # - event: UpdatePercs(uint32[5],uint32[5])
-        #   handler: updatePercs
-        # - event: UpdateTokenPerSecond(uint256,uint256)
-        #   handler: updateTokenPerSecond

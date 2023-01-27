@@ -188,6 +188,151 @@ export class TimelineEvent extends Entity {
       this.set("totalAmountClaimed", Value.fromBigInt(<BigInt>value));
     }
   }
+
+  get isLocked(): boolean {
+    let value = this.get("isLocked");
+    return value!.toBoolean();
+  }
+
+  set isLocked(value: boolean) {
+    this.set("isLocked", Value.fromBoolean(value));
+  }
+
+  get mutinyFrom(): Bytes | null {
+    let value = this.get("mutinyFrom");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set mutinyFrom(value: Bytes | null) {
+    if (!value) {
+      this.unset("mutinyFrom");
+    } else {
+      this.set("mutinyFrom", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get mutinyTo(): Bytes | null {
+    let value = this.get("mutinyTo");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set mutinyTo(value: Bytes | null) {
+    if (!value) {
+      this.unset("mutinyTo");
+    } else {
+      this.set("mutinyTo", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get updateIntervalFrom(): BigInt | null {
+    let value = this.get("updateIntervalFrom");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updateIntervalFrom(value: BigInt | null) {
+    if (!value) {
+      this.unset("updateIntervalFrom");
+    } else {
+      this.set("updateIntervalFrom", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updateIntervalTo(): BigInt | null {
+    let value = this.get("updateIntervalTo");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updateIntervalTo(value: BigInt | null) {
+    if (!value) {
+      this.unset("updateIntervalTo");
+    } else {
+      this.set("updateIntervalTo", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updateTokenPerSecondFrom(): BigInt | null {
+    let value = this.get("updateTokenPerSecondFrom");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updateTokenPerSecondFrom(value: BigInt | null) {
+    if (!value) {
+      this.unset("updateTokenPerSecondFrom");
+    } else {
+      this.set("updateTokenPerSecondFrom", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updateTokenPerSecondTo(): BigInt | null {
+    let value = this.get("updateTokenPerSecondTo");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updateTokenPerSecondTo(value: BigInt | null) {
+    if (!value) {
+      this.unset("updateTokenPerSecondTo");
+    } else {
+      this.set("updateTokenPerSecondTo", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updatePercsFrom(): Array<BigInt> | null {
+    let value = this.get("updatePercsFrom");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigIntArray();
+    }
+  }
+
+  set updatePercsFrom(value: Array<BigInt> | null) {
+    if (!value) {
+      this.unset("updatePercsFrom");
+    } else {
+      this.set("updatePercsFrom", Value.fromBigIntArray(<Array<BigInt>>value));
+    }
+  }
+
+  get updatePercsTo(): Array<BigInt> | null {
+    let value = this.get("updatePercsTo");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigIntArray();
+    }
+  }
+
+  set updatePercsTo(value: Array<BigInt> | null) {
+    if (!value) {
+      this.unset("updatePercsTo");
+    } else {
+      this.set("updatePercsTo", Value.fromBigIntArray(<Array<BigInt>>value));
+    }
+  }
 }
 
 export class Shaman extends Entity {
@@ -273,6 +418,15 @@ export class Shaman extends Entity {
 
   set valueScalePercs(value: Array<BigInt>) {
     this.set("valueScalePercs", Value.fromBigIntArray(value));
+  }
+
+  get isLocked(): boolean {
+    let value = this.get("isLocked");
+    return value!.toBoolean();
+  }
+
+  set isLocked(value: boolean) {
+    this.set("isLocked", Value.fromBoolean(value));
   }
 
   get teamLead(): Bytes {
